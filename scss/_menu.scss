@@ -1,0 +1,116 @@
+.menu-btn{
+    position: absolute;
+    z-index: 1;
+    right: 1rem;
+    top: 1rem;
+    width: 42px; 
+    height: 28px;
+    cursor: pointer;
+    @include transition-ease;
+    
+    &__burguer{
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        width: 28px;
+        height: 3px;
+        background-color: set-text-color($clr-primary-color);
+        @include transition-ease;
+        border-radius: 8px;
+        &::before{
+            content: '';
+            position: absolute;
+            top: -8px;
+            width: 28px;
+            height: 3px;
+            background-color: set-text-color($clr-primary-color);
+            @include transition-ease;
+            border-radius: 8px;
+        }
+
+        &::after {
+            @extend .menu-btn__burguer::before;
+            width: 20px;
+            top: 8px;
+        }
+
+        &.open{
+            transform: rotate(720deg);
+            background: transparent;
+
+            &::before{
+                transform: rotate(45deg) translate(5px, 8px);
+            }
+            &::after{
+                width: 28px;
+                transform: rotate(-45deg) translate(3px, -7px);
+            }
+        }
+    }
+
+}
+
+.navbar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    opacity: 0.95;
+    visibility: hidden;
+
+    &.open{
+        visibility: visible;
+    }
+
+    .menu-navbar{
+        display: flex;
+        flex-flow: column wrap;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        overflow: hidden;
+        background-color: $clr-primary-color;
+        padding-right: 1rem;
+        transform: translateY(-100%);
+        @include transition-ease;
+        gap: 2rem;
+
+
+        &.open {
+            transform: translateY((0));
+        }
+
+        &__item{
+            transform: translateX(100vw);
+            @include transition-ease;
+
+
+            &.open{
+                transform: translateX(0);
+            }
+
+        }
+        
+        &__link{
+            &.active{
+                color: $clr-secondary-color;
+            }
+            &.open{
+                font-size: 2rem;
+                text-transform: uppercase;
+                font-weight: 300;
+                @include transition-ease;
+            }
+
+            &:hover{
+                color: $clr-secondary-color
+            }
+        }
+    }
+}
+
+@for $i from 1 through 4{
+    .menu-navbar__item:nth-child(#{$i}){
+        transition-delay: ($i * 0.1s) + 0.15s;
+    }
+}
